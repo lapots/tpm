@@ -1,0 +1,12 @@
+{
+  "config": {
+    "downloads": "downloads-path",
+    "installations": "installations-path"
+  },
+  "tools": [
+    {
+      "id": "tool-id",
+      "download": "download-link"
+    }
+  ]
+}
