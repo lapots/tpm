@@ -1,12 +1,12 @@
 {
   "config": {
-    "downloads": "downloads-path",
-    "installations": "installations-path"
+    "downloads": "L://tpm/downloads",
+    "installations": "L://tpm/installations"
   },
   "tools": [
     {
-      "id": "tool-id",
-      "download": "download-link"
+      "id": "ghc-haskell",
+      "download": "http://downloads.haskell.org/~ghc/8.0.1/ghc-8.0.1-x86_64-unknown-mingw32.tar.xz"
     }
   ]
 }
