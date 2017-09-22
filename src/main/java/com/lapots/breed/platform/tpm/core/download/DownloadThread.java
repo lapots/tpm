@@ -1,8 +1,11 @@
 package com.lapots.breed.platform.tpm.core.download;
 
+import com.lapots.breed.platform.tpm.core.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.consistency.ArtifactRepository;
 import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.Path;
 
@@ -14,9 +17,10 @@ public class DownloadThread implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Doing download");
+        System.out.println("Attempt to download from " + downloadLink);
         Path downloadPathFile =  FilePathUtils.buildAbsolutePathFromFileLink(downloadPath, downloadLink);
         DownloadUtils.downloadReplace(downloadLink, downloadPathFile.toFile());
-        System.out.println("Finished downloading from " + downloadLink);
+        Artifact artifact = new Artifact(FilenameUtils.getName(downloadLink), downloadPathFile.toString());
+        ArtifactRepository.PERSISTENCE.addArtifact(artifact);
     }
 }
