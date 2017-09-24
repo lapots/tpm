@@ -1,26 +1,18 @@
 package com.lapots.breed.platform.tpm.core.download;
 
+import com.lapots.breed.platform.tpm.core.api.AbstractExecutionThread;
 import com.lapots.breed.platform.tpm.core.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.consistency.ArtifactRepository;
-import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.apache.commons.io.FilenameUtils;
 
-import java.nio.file.Path;
+import java.io.File;
 
-@AllArgsConstructor
-@Data
-public class DownloadThread implements Runnable {
-    private String downloadLink;
-    private String downloadPath;
-
+public class DownloadThread extends AbstractExecutionThread {
     @Override
     public void run() {
-        System.out.println("Attempt to download from " + downloadLink);
-        Path downloadPathFile =  FilePathUtils.buildAbsolutePathFromFileLink(downloadPath, downloadLink);
-        DownloadUtils.downloadReplace(downloadLink, downloadPathFile.toFile());
-        Artifact artifact = new Artifact(FilenameUtils.getName(downloadLink), downloadPathFile.toString());
+        Artifact artifact = this.getArtifact();
+        System.out.println("Attempt to download artifact: " + artifact.getId());
+        DownloadUtils.downloadReplace(artifact.getDownloadSource(), new File(artifact.getDownloadPath()));
+        artifact.setDownloaded(true);
         ArtifactRepository.PERSISTENCE.addArtifact(artifact);
     }
 }

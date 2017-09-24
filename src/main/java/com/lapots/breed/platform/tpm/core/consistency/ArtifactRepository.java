@@ -1,5 +1,8 @@
 package com.lapots.breed.platform.tpm.core.consistency;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,5 +16,15 @@ public enum  ArtifactRepository {
             System.out.println("Updating existing artifact " + artifact.getId() + " !");
         }
         artifacts.put(artifact.getId(), artifact);
+    }
+
+    public List<Artifact> getNotInstalledArtifacts() {
+        List<Artifact> notInstalled = new ArrayList<>();
+        artifacts.forEach((key, value) -> {
+            if (!value.isInstalled()) {
+                notInstalled.add(value);
+            }
+        });
+        return notInstalled;
     }
 }

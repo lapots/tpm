@@ -1,4 +1,4 @@
-package com.lapots.breed.platform.tpm.core;
+package com.lapots.breed.platform.tpm.core.json;
 
 import lombok.Data;
 

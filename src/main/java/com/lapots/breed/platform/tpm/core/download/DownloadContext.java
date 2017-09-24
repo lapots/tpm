@@ -1,17 +1,13 @@
 package com.lapots.breed.platform.tpm.core.download;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import com.lapots.breed.platform.tpm.core.api.AbstractArtifactContext;
+import com.lapots.breed.platform.tpm.core.consistency.Artifact;
 
-public class DownloadContext {
-    private ExecutorService service = Executors.newFixedThreadPool(5);
-
-    public void addToDownloads(String downloadLink, String downloadsFolder) {
-        DownloadThread th = new DownloadThread(downloadLink, downloadsFolder);
-        service.submit(th);
-    }
-
-    public void closeContext() {
-        service.shutdown();
+public class DownloadContext extends AbstractArtifactContext {
+    @Override
+    public void addArtifactToContext(Artifact artifact) {
+        DownloadThread th = new DownloadThread();
+        th.setArtifact(artifact);
+        executeThread(th);
     }
 }
