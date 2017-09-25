@@ -1,8 +1,10 @@
 package com.lapots.breed.platform.tpm.core;
 
 import com.lapots.breed.platform.tpm.core.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.consistency.ArtifactRepository;
 import com.lapots.breed.platform.tpm.core.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.install.InstallationContext;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import com.lapots.breed.platform.tpm.core.json.ToolJsonStructure;
 
@@ -33,10 +35,17 @@ public class TpManager {
                 loadedJson.getConfig().getInstallationsFolder()
         );
 
+        System.out.println("Downloading artifacts...");
         DownloadContext downloadContext = new DownloadContext();
         downloadPackages(loadedJson.getTools(), downloadContext,
                 loadedJson.getConfig().getDownloadsFolder(), loadedJson.getConfig().getInstallationsFolder());
         downloadContext.closeContext();
+
+        InstallationContext installationContext = new InstallationContext();
+        for (Artifact artifact : ArtifactRepository.PERSISTENCE.getNotInstalledArtifacts()) {
+            installationContext.addArtifactToContext(artifact);
+        }
+        installationContext.closeContext();
     }
 
     private void prepareFolders(String ... folders) {

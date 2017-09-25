@@ -10,13 +10,16 @@ import java.nio.file.Paths;
 
 public class FilePathUtils {
 
+    public static String buildSimplePath(String folderPath, String filename) {
+        return FilenameUtils.separatorsToSystem(folderPath + File.separatorChar + filename);
+    }
+
     public static Path buildAbsolutePathFromFileLink(String folderPath, String link) {
         return buildAbsolutePath(folderPath, FilenameUtils.getName(link));
     }
 
     public static Path buildAbsolutePath(String folderPath, String filename) {
-        String completePath = FilenameUtils.separatorsToSystem(folderPath + File.separatorChar + filename);
-        return Paths.get(completePath);
+        return Paths.get(buildSimplePath(folderPath, filename));
     }
 
     public static File prepareFile(String filePath) {
