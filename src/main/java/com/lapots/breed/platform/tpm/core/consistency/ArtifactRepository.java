@@ -11,7 +11,7 @@ public enum  ArtifactRepository {
 
     private Map<String, Artifact> artifacts = new ConcurrentHashMap<>();
 
-    public void addArtifact(Artifact artifact) {
+    public synchronized void addArtifact(Artifact artifact) {
         if (null != artifacts.get(artifact.getId())) {
             System.out.println("Updating existing artifact " + artifact.getId() + " !");
         }

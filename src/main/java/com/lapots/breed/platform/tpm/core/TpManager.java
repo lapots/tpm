@@ -1,8 +1,12 @@
 package com.lapots.breed.platform.tpm.core;
 
+import com.google.common.eventbus.EventBus;
 import com.lapots.breed.platform.tpm.core.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.consistency.ArtifactRepository;
 import com.lapots.breed.platform.tpm.core.download.DownloadContext;
+import com.lapots.breed.platform.tpm.core.event.TpManagerEventListener;
+import com.lapots.breed.platform.tpm.core.event.TpmEvent;
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.install.InstallationContext;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
@@ -27,13 +31,11 @@ public class TpManager {
             loader.loadTpmPackageFromCustom(filename);
         }
 
+        TpmEventBus.bus.registerListener(new TpManagerEventListener());
+
         // process json
         System.out.println("Processing " + filename);
-        PackageJsonStructure loadedJson = loader.getPackageJson();
-        prepareFolders(
-                loadedJson.getConfig().getDownloadsFolder(),
-                loadedJson.getConfig().getInstallationsFolder()
-        );
+        PackageJsonStructure loadedJson = doLoadEvent(filename);
 
         System.out.println("Downloading artifacts...");
         DownloadContext downloadContext = new DownloadContext();
@@ -46,6 +48,18 @@ public class TpManager {
             installationContext.addArtifactToContext(artifact);
         }
         installationContext.closeContext();
+    }
+
+    private PackageJsonStructure doLoadEvent(String filename) {
+        // process json
+        System.out.println("Processing " + filename);
+        PackageJsonStructure loadedJson = loader.getPackageJson();
+        prepareFolders(
+                loadedJson.getConfig().getDownloadsFolder(),
+                loadedJson.getConfig().getInstallationsFolder()
+        );
+        TpmEventBus.bus.publish(new TpmEvent("loading", "sample"));
+        return loadedJson;
     }
 
     private void prepareFolders(String ... folders) {
