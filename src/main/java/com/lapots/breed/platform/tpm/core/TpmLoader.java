@@ -29,7 +29,7 @@ public class TpmLoader {
                 throw new TpmException("Failed to parse: " + filename);
             }
         } catch (IOException e) {
-            TpmEventBus.bus.publish(new ErrorEvent(e));
+            TpmEventBus.bus.publish(new ErrorEvent(e, null));
         }
     }
 }

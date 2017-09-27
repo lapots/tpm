@@ -32,7 +32,7 @@ public class TarInstaller implements Installer {
                 archiveEntry = ts.getNextTarEntry();
             }
         } catch (IOException e) {
-            TpmEventBus.bus.publish(new ErrorEvent(e));
+            TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }
     }
 }

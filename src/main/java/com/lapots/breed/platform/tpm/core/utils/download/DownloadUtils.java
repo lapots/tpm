@@ -23,7 +23,7 @@ public class DownloadUtils {
         try {
             FileUtils.copyURLToFile(new URL(link), downloadPathFile);
         } catch (IOException e) {
-            TpmEventBus.bus.publish(new ErrorEvent(e));
+            TpmEventBus.bus.publish(new ErrorEvent(e, null));
         }
     }
 }

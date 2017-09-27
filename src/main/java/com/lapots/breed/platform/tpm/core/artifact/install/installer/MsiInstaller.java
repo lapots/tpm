@@ -30,7 +30,7 @@ public class MsiInstaller implements Installer {
                 // TODO: throw something or goto 30 line
             }
         } catch (IOException e) {
-            TpmEventBus.bus.publish(new ErrorEvent(e));
+            TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }
     }
 }

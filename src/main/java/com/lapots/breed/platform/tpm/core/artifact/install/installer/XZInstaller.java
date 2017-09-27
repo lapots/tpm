@@ -26,7 +26,7 @@ public class XZInstaller implements Installer {
                 XZCompressorInputStream xz = new XZCompressorInputStream(io)) {
             IOUtils.copy(xz, new FileOutputStream(extractedFilePath));
         } catch (IOException e) {
-            TpmEventBus.bus.publish(new ErrorEvent(e));
+            TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }
     }
 }

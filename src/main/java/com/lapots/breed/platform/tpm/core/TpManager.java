@@ -53,8 +53,8 @@ public class TpManager {
                 loadedJson.getConfig().getDownloadsFolder(),
                 loadedJson.getConfig().getInstallationsFolder()
         );
-        TpmEventBus.bus.publish(new LogNotifyEvent("finished loading json file"));
-        TpmEventBus.bus.publish(new ErrorEvent(new IllegalStateException("du dun")));
+        TpmEventBus.bus.publish(new LogNotifyEvent("finished loading json file", null));
+        TpmEventBus.bus.publish(new ErrorEvent(new IllegalStateException("du dun"), null));
         return loadedJson;
     }
 
