@@ -3,7 +3,9 @@ package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.TpmEventCode;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
+import com.lapots.breed.platform.tpm.core.event.type.InstallationEvent;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
@@ -27,8 +29,9 @@ public class MsiInstaller implements Installer {
         try {
             int exitValue = exec.execute(cmd);
             if (exitValue != SUCCESS_INSTALL_CODE) {
-                // TODO: throw something or goto 30 line
+                TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.FAILURE, artifact));
             }
+            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.SUCCESS, artifact));
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }

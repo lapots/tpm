@@ -2,6 +2,8 @@ package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.event.TpmEventCode;
+import com.lapots.breed.platform.tpm.core.event.type.InstallationEvent;
 import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
@@ -31,6 +33,7 @@ public class TarInstaller implements Installer {
                 }
                 archiveEntry = ts.getNextTarEntry();
             }
+            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.SUCCESS, artifact));
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }

@@ -1,5 +1,8 @@
 package com.lapots.breed.platform.tpm.core.artifact.consistency;
 
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +15,9 @@ public enum  ArtifactRepository {
 
     public synchronized void addArtifact(Artifact artifact) {
         if (null != artifacts.get(artifact.getId())) {
-            System.out.println("Updating existing artifact " + artifact.getId() + " !");
+            TpmEventBus.bus.publish(
+                    new LogNotifyEvent("Updating existing artifact " + artifact.getId() + " !", artifact)
+            );
         }
         artifacts.put(artifact.getId(), artifact);
     }

@@ -26,7 +26,9 @@ public class TpmLoader {
                      new FileInputStream(FilePathUtils.getClasspathFile(filename))) {
             packageJson = mapper.readValue(fis, PackageJsonStructure.class);
             if (null == packageJson) {
-                throw new TpmException("Failed to parse: " + filename);
+                TpmEventBus.bus.publish(
+                        new ErrorEvent(new TpmException("Failed to parse: " + filename), null)
+                );
             }
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, null));

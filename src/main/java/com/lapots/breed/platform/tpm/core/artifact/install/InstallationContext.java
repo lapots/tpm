@@ -2,6 +2,8 @@ package com.lapots.breed.platform.tpm.core.artifact.install;
 
 import com.lapots.breed.platform.tpm.core.api.AbstractArtifactContext;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.ExeInstallerThread;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.MsiInstallerThread;
@@ -24,22 +26,21 @@ public class InstallationContext extends AbstractArtifactContext {
 
     private AbstractInstallationThread generateThread(Artifact artifact) {
         String extension = DownloadUtils.downloadObjectExtension(artifact.getDownloadSource());
-        System.out.println("Artifact extension: " + extension);
         if (SUPPORTED_EXTENSIONS.contains(extension)) {
             switch (extension) {
-                case "tar":
-                    return new TarInstallerThread(artifact);
-                case "xz":
-                    return new XZInstallerThread(artifact);
-                case "msi":
-                    return new MsiInstallerThread(artifact);
-                case "exe":
-                    return new ExeInstallerThread(artifact);
+                case "tar": return new TarInstallerThread(artifact);
+                case "xz" : return new XZInstallerThread(artifact);
+                case "msi": return new MsiInstallerThread(artifact);
+                case "exe": return new ExeInstallerThread(artifact);
                 default:
-                    System.out.println("Cannot process further!");
+                    TpmEventBus.bus.publish(
+                            new LogNotifyEvent("Cannot process further!", artifact)
+                    );
             }
         } else {
-            System.out.println("Extension " + extension + " is not supported!");
+            TpmEventBus.bus.publish(
+                    new LogNotifyEvent("Extension " + extension + " is not supported!", artifact)
+            );
         }
 
         return null;
