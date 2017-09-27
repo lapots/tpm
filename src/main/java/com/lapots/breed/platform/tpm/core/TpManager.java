@@ -5,7 +5,7 @@ import com.lapots.breed.platform.tpm.core.artifact.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
-import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import com.lapots.breed.platform.tpm.core.json.ToolJsonStructure;
 

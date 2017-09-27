@@ -1,4 +1,4 @@
-package com.lapots.breed.platform.tpm.core.utils.download;
+package com.lapots.breed.platform.tpm.core.utils;
 
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;

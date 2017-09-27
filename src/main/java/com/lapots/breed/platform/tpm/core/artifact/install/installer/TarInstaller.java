@@ -2,10 +2,10 @@ package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
-import com.lapots.breed.platform.tpm.core.utils.download.DownloadUtils;
+import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
-import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.io.IOUtils;

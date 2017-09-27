@@ -1,10 +1,8 @@
-package com.lapots.breed.platform.tpm.core.utils.file;
+package com.lapots.breed.platform.tpm.core.utils;
 
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

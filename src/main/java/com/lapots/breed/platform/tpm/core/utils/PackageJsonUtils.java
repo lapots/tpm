@@ -1,4 +1,4 @@
-package com.lapots.breed.platform.tpm.core.utils.json;
+package com.lapots.breed.platform.tpm.core.utils;
 
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import com.lapots.breed.platform.tpm.core.json.ToolJsonStructure;

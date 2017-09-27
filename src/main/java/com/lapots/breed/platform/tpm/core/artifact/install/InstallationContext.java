@@ -2,7 +2,7 @@ package com.lapots.breed.platform.tpm.core.artifact.install;
 
 import com.lapots.breed.platform.tpm.core.api.AbstractArtifactContext;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
-import com.lapots.breed.platform.tpm.core.utils.download.DownloadUtils;
+import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.ExeInstallerThread;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.MsiInstallerThread;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.TarInstallerThread;

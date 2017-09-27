@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lapots.breed.platform.tpm.core.api.exception.TpmException;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
-import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import lombok.Data;
 

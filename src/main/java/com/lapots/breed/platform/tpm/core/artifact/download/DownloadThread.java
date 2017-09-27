@@ -3,7 +3,7 @@ package com.lapots.breed.platform.tpm.core.artifact.download;
 import com.lapots.breed.platform.tpm.core.api.AbstractExecutionThread;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.ArtifactRepository;
-import com.lapots.breed.platform.tpm.core.utils.download.DownloadUtils;
+import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 
 import java.io.File;
 
