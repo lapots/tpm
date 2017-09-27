@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Artifact {
+    private String installers; // move somewhere
     private String id;
-    private String downloadSource;
-    private String downloadPath;
-    private String installationPath;
-    private boolean isInstalled;
-    private boolean isDownloaded;
+    private String name; // name without extension
+    private String srcLink;
+    private String location; // for downloads - it is destination, for installation - source
+    private boolean installed;
+    private boolean downloaded;
 }

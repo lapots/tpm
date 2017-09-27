@@ -17,7 +17,7 @@ public class DownloadThread extends AbstractExecutionThread {
         TpmEventBus.bus.publish(
                 new LogNotifyEvent("Attempt to download artifact: " + artifact.getId(), artifact)
         );
-        DownloadUtils.downloadReplace(artifact.getDownloadSource(), new File(artifact.getDownloadPath()));
+        DownloadUtils.downloadReplace(artifact.getSrcLink(), new File(artifact.getLocation()));
         TpmEventBus.bus.publish(new DownloadEvent(TpmEventCode.SUCCESS, artifact));
     }
 }

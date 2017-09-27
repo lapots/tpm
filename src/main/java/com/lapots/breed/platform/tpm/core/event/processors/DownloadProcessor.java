@@ -16,7 +16,6 @@ public class DownloadProcessor implements IEventProcessor<DownloadEvent> {
         event.getArtifact().setDownloaded(true);
         ArtifactRepository.PERSISTENCE.addArtifact(event.getArtifact());
         // now start installation
-        InstallationContext.getInstance()
-                .addArtifactToContext(event.getArtifact());
+        InstallationContext.getInstance().addArtifactToContext(event.getArtifact());
     }
 }

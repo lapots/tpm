@@ -4,12 +4,13 @@ import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.event.TpmEventCode;
 import com.lapots.breed.platform.tpm.core.event.type.InstallationEvent;
-import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
+import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
@@ -17,11 +18,12 @@ import java.io.*;
 public class TarInstaller implements Installer {
     @Override
     public void install(Artifact artifact) {
-        String extractedFilePath = FilePathUtils.buildSimplePath(artifact.getInstallationPath(),
-                DownloadUtils.downloadObjectName(artifact.getDownloadSource()));
-        System.out.println("Attempt to extract tar: " + artifact.getDownloadPath());
-        System.out.println("Extracted file name: " + extractedFilePath);
-        try (InputStream io = new FileInputStream(artifact.getDownloadPath());
+        String nameWithoutExtension = FilenameUtils.getBaseName(artifact.getName());
+        String extractedFilePath = FilePathUtils.buildSimplePath(artifact.getInstallers(), nameWithoutExtension);
+        TpmEventBus.bus.publish(
+                new LogNotifyEvent("Extracting into " + extractedFilePath, null)
+        );
+        try (InputStream io = new FileInputStream(artifact.getLocation());
              TarArchiveInputStream ts = new TarArchiveInputStream(io)) {
             TarArchiveEntry archiveEntry = ts.getNextTarEntry();
             while (archiveEntry != null) {
@@ -33,7 +35,9 @@ public class TarInstaller implements Installer {
                 }
                 archiveEntry = ts.getNextTarEntry();
             }
-            // TODO: implement convenient naming
+
+            artifact.setLocation(extractedFilePath);
+            artifact.setName(nameWithoutExtension);
             TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.PENDING, artifact));
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, artifact));

@@ -4,11 +4,12 @@ import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.artifact.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
+import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import com.lapots.breed.platform.tpm.core.json.ToolJsonStructure;
+import org.apache.commons.io.FilenameUtils;
 
-import java.nio.file.Path;
 import java.util.List;
 
 public class TpManager {
@@ -20,7 +21,6 @@ public class TpManager {
     }
 
     public void loadPackages(String filename) {
-        // read file
         if (null == filename || "".equals(filename)) {
             loader.loadTpmPackagesFromDefault();
         } else {
@@ -56,11 +56,13 @@ public class TpManager {
         for (ToolJsonStructure tool : tools) {
             Artifact artifact = new Artifact();
             // with filename
-            Path path = FilePathUtils.buildAbsolutePathFromFileLink(downloadsFolder, tool.getDownload());
-            artifact.setDownloadPath(path.toString());
-            artifact.setDownloadSource(tool.getDownload());
+            String location = FilePathUtils.buildAbsolutePathFromFileLink(downloadsFolder,
+                    FilenameUtils.getName(tool.getDownload()));
+            artifact.setLocation(location);
+            artifact.setSrcLink(tool.getDownload());
             artifact.setId(tool.getId());
-            artifact.setInstallationPath(installationFolder);
+            artifact.setInstallers(installationFolder);
+            artifact.setName(DownloadUtils.downloadObjectName(tool.getDownload()));
             downloadContext.addArtifactToContext(artifact);
         }
     }

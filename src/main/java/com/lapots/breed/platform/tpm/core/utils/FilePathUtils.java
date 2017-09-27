@@ -12,12 +12,12 @@ public class FilePathUtils {
         return FilenameUtils.separatorsToSystem(folderPath + File.separatorChar + filename);
     }
 
-    public static Path buildAbsolutePathFromFileLink(String folderPath, String link) {
+    public static String buildAbsolutePathFromFileLink(String folderPath, String link) {
         return buildAbsolutePath(folderPath, FilenameUtils.getName(link));
     }
 
-    public static Path buildAbsolutePath(String folderPath, String filename) {
-        return Paths.get(buildSimplePath(folderPath, filename));
+    public static String buildAbsolutePath(String folderPath, String filename) {
+        return buildSimplePath(folderPath, filename);
     }
 
     public static File prepareFolder(String folderPath) {

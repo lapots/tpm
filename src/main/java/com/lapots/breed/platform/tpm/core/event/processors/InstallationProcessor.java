@@ -12,12 +12,10 @@ public class InstallationProcessor implements IEventProcessor<InstallationEvent>
     @Override
     public void processEvent(InstallationEvent event) {
         if (TpmEventCode.PENDING == event.getMetadata()) { // put it back into processing loop
-            InstallationContext.getInstance()
-                    .addArtifactToContext(event.getArtifact());
+            InstallationContext.getInstance().addArtifactToContext(event.getArtifact());
         } else {
             event.getArtifact().setInstalled(true);
-            ArtifactRepository.PERSISTENCE
-                    .addArtifact(event.getArtifact());
+            ArtifactRepository.PERSISTENCE.addArtifact(event.getArtifact());
         }
     }
 }

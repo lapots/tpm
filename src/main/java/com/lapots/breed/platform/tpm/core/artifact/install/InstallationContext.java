@@ -35,7 +35,7 @@ public class InstallationContext extends AbstractArtifactContext {
     }
 
     private AbstractInstallationThread generateThread(Artifact artifact) {
-        String extension = DownloadUtils.downloadObjectExtension(artifact.getDownloadSource());
+        String extension = DownloadUtils.downloadObjectExtension(artifact.getSrcLink());
         if (SUPPORTED_EXTENSIONS.contains(extension)) {
             switch (extension) {
                 case "tar": return new TarInstallerThread(artifact);
