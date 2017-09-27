@@ -3,6 +3,8 @@ package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.artifact.download.DownloadUtils;
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
 import org.apache.commons.compress.compressors.xz.XZCompressorInputStream;
 import org.apache.commons.io.IOUtils;
@@ -24,7 +26,7 @@ public class XZInstaller implements Installer {
                 XZCompressorInputStream xz = new XZCompressorInputStream(io)) {
             IOUtils.copy(xz, new FileOutputStream(extractedFilePath));
         } catch (IOException e) {
-            System.out.println("Failed to install " + artifact.getId());
+            TpmEventBus.bus.publish(new ErrorEvent(e));
         }
     }
 }

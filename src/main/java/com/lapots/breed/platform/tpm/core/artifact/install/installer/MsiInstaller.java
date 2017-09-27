@@ -2,6 +2,8 @@ package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteWatchdog;
@@ -28,7 +30,7 @@ public class MsiInstaller implements Installer {
                 // TODO: throw something or goto 30 line
             }
         } catch (IOException e) {
-            System.out.println("Failed to install " + artifact.getId());
+            TpmEventBus.bus.publish(new ErrorEvent(e));
         }
     }
 }

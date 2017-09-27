@@ -2,6 +2,7 @@ package com.lapots.breed.platform.tpm.core.event;
 
 import com.google.common.eventbus.EventBus;
 import com.lapots.breed.platform.tpm.core.api.event.TpmEvent;
+import com.lapots.breed.platform.tpm.core.event.processors.ErrorProcessor;
 import com.lapots.breed.platform.tpm.core.event.processors.LogNotifyProcessor;
 
 public enum TpmEventBus {
@@ -16,6 +17,7 @@ public enum TpmEventBus {
     private class TpmInternalEventBus extends EventBus {
         TpmInternalEventBus() {
             register(new LogNotifyProcessor());
+            register(new ErrorProcessor());
         }
     }
 }

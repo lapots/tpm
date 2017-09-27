@@ -1,5 +1,7 @@
 package com.lapots.breed.platform.tpm.core.artifact.download;
 
+import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -21,7 +23,7 @@ public class DownloadUtils {
         try {
             FileUtils.copyURLToFile(new URL(link), downloadPathFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            TpmEventBus.bus.publish(new ErrorEvent(e));
         }
     }
 }

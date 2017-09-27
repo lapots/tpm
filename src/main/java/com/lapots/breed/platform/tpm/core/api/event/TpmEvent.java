@@ -6,6 +6,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class TpmEvent<T> {
+    // TODO: aside metadata add artifact
     private T metadata;
 
     public TpmEvent(T metadata) {

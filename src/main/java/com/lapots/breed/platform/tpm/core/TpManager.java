@@ -3,6 +3,7 @@ package com.lapots.breed.platform.tpm.core;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.artifact.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
@@ -52,9 +53,8 @@ public class TpManager {
                 loadedJson.getConfig().getDownloadsFolder(),
                 loadedJson.getConfig().getInstallationsFolder()
         );
-        TpmEventBus.bus.publish(
-                new LogNotifyEvent("finished loading json file")
-        );
+        TpmEventBus.bus.publish(new LogNotifyEvent("finished loading json file"));
+        TpmEventBus.bus.publish(new ErrorEvent(new IllegalStateException("du dun")));
         return loadedJson;
     }
 
