@@ -1,8 +1,8 @@
 package com.lapots.breed.platform.tpm.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lapots.breed.platform.tpm.core.exception.TpmException;
-import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.api.exception.TpmException;
+import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import lombok.Data;
 

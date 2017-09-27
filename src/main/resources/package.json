@@ -1,7 +1,7 @@
 {
   "config": {
-    "downloads": "L://tpm/downloads",
-    "installations": "L://tpm/installations"
+    "downloads": "D://tpm/downloads",
+    "installations": "D://tpm/installations"
   },
   "tools": [
     {

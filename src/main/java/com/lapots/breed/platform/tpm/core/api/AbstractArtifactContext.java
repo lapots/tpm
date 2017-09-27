@@ -1,6 +1,6 @@
 package com.lapots.breed.platform.tpm.core.api;
 
-import com.lapots.breed.platform.tpm.core.exception.TpmException;
+import com.lapots.breed.platform.tpm.core.api.exception.TpmException;
 import lombok.Data;
 
 import java.util.concurrent.ExecutorService;

@@ -1,10 +1,10 @@
 package com.lapots.breed.platform.tpm.core;
 
-import com.lapots.breed.platform.tpm.core.consistency.Artifact;
-import com.lapots.breed.platform.tpm.core.download.DownloadContext;
+import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.artifact.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
-import com.lapots.breed.platform.tpm.core.file.FilePathUtils;
+import com.lapots.breed.platform.tpm.core.utils.file.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
 import com.lapots.breed.platform.tpm.core.json.ToolJsonStructure;
 

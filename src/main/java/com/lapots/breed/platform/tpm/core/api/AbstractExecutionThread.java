@@ -1,6 +1,6 @@
 package com.lapots.breed.platform.tpm.core.api;
 
-import com.lapots.breed.platform.tpm.core.consistency.Artifact;
+import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import lombok.Data;
 
 @Data
