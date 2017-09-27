@@ -5,7 +5,7 @@ import com.lapots.breed.platform.tpm.core.api.event.IEventProcessor;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 
 public class LogNotifyProcessor implements IEventProcessor<LogNotifyEvent> {
-    @Subscribe // TODO: investigate abstract
+    @Subscribe
     @Override
     public void processEvent(LogNotifyEvent event) {
         System.out.println(event.getMetadata());
