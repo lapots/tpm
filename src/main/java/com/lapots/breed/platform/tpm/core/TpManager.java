@@ -3,7 +3,6 @@ package com.lapots.breed.platform.tpm.core;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.artifact.download.DownloadContext;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
-import com.lapots.breed.platform.tpm.core.event.type.ErrorEvent;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 import com.lapots.breed.platform.tpm.core.utils.FilePathUtils;
 import com.lapots.breed.platform.tpm.core.json.PackageJsonStructure;
@@ -28,33 +27,21 @@ public class TpManager {
             loader.loadTpmPackageFromCustom(filename);
         }
 
-        // process json
         PackageJsonStructure loadedJson = doLoadEvent(filename);
-/*
-        System.out.println("Downloading artifacts...");
-        DownloadContext downloadContext = new DownloadContext();
-        downloadPackages(loadedJson.getTools(), downloadContext,
-                loadedJson.getConfig().getDownloadsFolder(), loadedJson.getConfig().getInstallationsFolder());
-        downloadContext.closeContext();
 
-        InstallationContext installationContext = new InstallationContext();
-        for (Artifact artifact : ArtifactRepository.PERSISTENCE.getNotInstalledArtifacts()) {
-            installationContext.addArtifactToContext(artifact);
-        }
-        installationContext.closeContext();
-        */
+        TpmEventBus.bus.publish(new LogNotifyEvent("downloading artifacts...", null));
+        downloadPackages(loadedJson.getTools(), loadedJson.getConfig().getDownloadsFolder(),
+                loadedJson.getConfig().getInstallationsFolder());
     }
 
     private PackageJsonStructure doLoadEvent(String filename) {
-        // process json
-        System.out.println("Processing " + filename);
+        TpmEventBus.bus.publish(new LogNotifyEvent("Processing " + filename, null));
         PackageJsonStructure loadedJson = loader.getPackageJson();
         prepareFolders(
                 loadedJson.getConfig().getDownloadsFolder(),
                 loadedJson.getConfig().getInstallationsFolder()
         );
         TpmEventBus.bus.publish(new LogNotifyEvent("finished loading json file", null));
-        TpmEventBus.bus.publish(new ErrorEvent(new IllegalStateException("du dun"), null));
         return loadedJson;
     }
 
@@ -64,10 +51,8 @@ public class TpManager {
         }
     }
 
-    private void downloadPackages(List<ToolJsonStructure> tools,
-                                  DownloadContext downloadContext,
-                                  String downloadsFolder,
-                                  String installationFolder) {
+    private void downloadPackages(List<ToolJsonStructure> tools, String downloadsFolder, String installationFolder) {
+        DownloadContext downloadContext = DownloadContext.getInstance();
         for (ToolJsonStructure tool : tools) {
             Artifact artifact = new Artifact();
             // with filename

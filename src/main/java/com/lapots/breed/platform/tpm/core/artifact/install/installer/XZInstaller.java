@@ -21,13 +21,11 @@ public class XZInstaller implements Installer {
     public void install(Artifact artifact) {
         String extractedFilePath = FilePathUtils.buildSimplePath(artifact.getInstallationPath(),
                 DownloadUtils.downloadObjectName(artifact.getDownloadPath()));
-        System.out.println("Object name without extension: " + DownloadUtils.downloadObjectName(artifact.getDownloadPath()));
-        System.out.println("Attempt to extract xz: " + artifact.getDownloadPath());
         System.out.println("Extracted file name: " + extractedFilePath);
         try (InputStream io = new FileInputStream(artifact.getDownloadPath());
                 XZCompressorInputStream xz = new XZCompressorInputStream(io)) {
             IOUtils.copy(xz, new FileOutputStream(extractedFilePath));
-            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.SUCCESS, artifact));
+            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.PENDING, artifact));
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }

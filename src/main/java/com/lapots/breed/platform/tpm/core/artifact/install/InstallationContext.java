@@ -3,6 +3,8 @@ package com.lapots.breed.platform.tpm.core.artifact.install;
 import com.lapots.breed.platform.tpm.core.api.AbstractArtifactContext;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.event.TpmEventBus;
+import com.lapots.breed.platform.tpm.core.event.TpmEventCode;
+import com.lapots.breed.platform.tpm.core.event.type.InstallationEvent;
 import com.lapots.breed.platform.tpm.core.event.type.LogNotifyEvent;
 import com.lapots.breed.platform.tpm.core.utils.DownloadUtils;
 import com.lapots.breed.platform.tpm.core.artifact.install.thread.ExeInstallerThread;
@@ -15,6 +17,14 @@ import java.util.List;
 
 public class InstallationContext extends AbstractArtifactContext {
     private static final List<String> SUPPORTED_EXTENSIONS = Arrays.asList("xz", "tar", "msi", "exe");
+    private static InstallationContext instance;
+
+    public static synchronized InstallationContext getInstance() {
+        if (null == instance) {
+            instance = new InstallationContext();
+        }
+        return instance;
+    }
 
     @Override
     public void addArtifactToContext(Artifact artifact) {
@@ -35,6 +45,9 @@ public class InstallationContext extends AbstractArtifactContext {
                 default:
                     TpmEventBus.bus.publish(
                             new LogNotifyEvent("Cannot process further!", artifact)
+                    );
+                    TpmEventBus.bus.publish(
+                            new InstallationEvent(TpmEventCode.SUCCESS, artifact)
                     );
             }
         } else {

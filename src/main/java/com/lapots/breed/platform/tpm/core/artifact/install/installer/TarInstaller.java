@@ -33,7 +33,8 @@ public class TarInstaller implements Installer {
                 }
                 archiveEntry = ts.getNextTarEntry();
             }
-            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.SUCCESS, artifact));
+            // TODO: implement convenient naming
+            TpmEventBus.bus.publish(new InstallationEvent(TpmEventCode.PENDING, artifact));
         } catch (IOException e) {
             TpmEventBus.bus.publish(new ErrorEvent(e, artifact));
         }
