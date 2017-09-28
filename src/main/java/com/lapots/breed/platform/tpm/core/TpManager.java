@@ -41,6 +41,13 @@ public class TpManager {
                 loadedJson.getConfig().getDownloadsFolder(),
                 loadedJson.getConfig().getInstallationsFolder()
         );
+
+        TpmConfig.getInstance().init(
+                loadedJson.getConfig().getDownloadsFolder(),
+                loadedJson.getConfig().getInstallationsFolder()
+        );
+
+        System.out.println("Configuration: " + TpmConfig.getInstance());
         TpmEventBus.bus.publish(new LogNotifyEvent("finished loading json file", null));
         return loadedJson;
     }
@@ -61,9 +68,11 @@ public class TpManager {
             artifact.setLocation(location);
             artifact.setSrcLink(tool.getDownload());
             artifact.setId(tool.getId());
-            artifact.setInstallers(installationFolder);
             artifact.setName(DownloadUtils.downloadObjectName(tool.getDownload()));
             downloadContext.addArtifactToContext(artifact);
+            TpmEventBus.bus.publish(
+                    new LogNotifyEvent("Added to download artifact " + tool.getId(), null)
+            );
         }
     }
 }

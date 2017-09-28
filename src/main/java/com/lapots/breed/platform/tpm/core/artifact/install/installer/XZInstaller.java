@@ -1,5 +1,6 @@
 package com.lapots.breed.platform.tpm.core.artifact.install.installer;
 
+import com.lapots.breed.platform.tpm.core.TpmConfig;
 import com.lapots.breed.platform.tpm.core.api.installer.Installer;
 import com.lapots.breed.platform.tpm.core.artifact.consistency.Artifact;
 import com.lapots.breed.platform.tpm.core.event.TpmEventCode;
@@ -22,7 +23,8 @@ public class XZInstaller implements Installer {
     @Override
     public void install(Artifact artifact) {
         String nameWithoutExtension = FilenameUtils.getBaseName(artifact.getName());
-        String extractedFilePath = FilePathUtils.buildSimplePath(artifact.getInstallers(), nameWithoutExtension);
+        String extractedFilePath =
+                FilePathUtils.buildSimplePath(TpmConfig.getInstance().getInstallationFolder(), nameWithoutExtension);
         TpmEventBus.bus.publish(
                 new LogNotifyEvent("Extracting into " + extractedFilePath, null)
         );
